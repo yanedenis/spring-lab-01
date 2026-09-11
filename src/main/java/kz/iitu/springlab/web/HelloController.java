@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @RestController 
 @RequestMapping("/api")
 
+// Endpoints
 public class HelloController {
     @Value("${app.owner:unknown}")
     private String owner;
