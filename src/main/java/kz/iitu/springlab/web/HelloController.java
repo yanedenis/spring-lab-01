@@ -25,7 +25,17 @@ public class HelloController {
                         Runtime.getRuntime().availableProcessors());
     }
 
+    @GetMapping("/sum")
+    public Sum sum(@RequestParam(defaultValue = "0", name = "a") int firstNum, 
+                   @RequestParam(defaultValue = "0", name = "b") int secondNum) {
+        return new Sum(firstNum + secondNum, 
+                       firstNum - secondNum, 
+                       firstNum * secondNum);
+    }
+
     public record Greeting(String message, String owner, LocalDateTime timestamp) {}
 
     public record Info(String owner, String javaVersion, int cpuCores) {}
+
+    public record Sum(int sum, int difference, int product) {}
 }
