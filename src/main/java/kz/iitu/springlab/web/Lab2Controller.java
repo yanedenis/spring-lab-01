@@ -3,7 +3,9 @@ package kz.iitu.springlab.web;
 import kz.iitu.springlab.lifecycle.LifecycleDemo;
 import kz.iitu.springlab.notify.NotificationService;
 import kz.iitu.springlab.scope.TicketOffice;
+import kz.iitu.springlab.notify.ReversedNotifier;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Qualifier;
  
 import java.util.*;
 
@@ -13,13 +15,16 @@ public class Lab2Controller {
     private final NotificationService notifications;
     private final LifecycleDemo lifecycle;
     private final TicketOffice ticketOffice;
+    private final ReversedNotifier reversedNotifier;
  
     public Lab2Controller(NotificationService notifications, 
                           LifecycleDemo lifecycle,
-                          TicketOffice ticketOffice) {
+                          TicketOffice ticketOffice,
+                          @Qualifier("reversed") ReversedNotifier reversedNotifier) {
         this.notifications = notifications;
         this.lifecycle = lifecycle;
         this.ticketOffice = ticketOffice;
+        this.reversedNotifier = reversedNotifier;
     }
  
     @GetMapping("/notify")
@@ -40,4 +45,11 @@ public class Lab2Controller {
         return ticketOffice.demo();
     }
 
+    @GetMapping("/reversed")
+    public Map<String, String> reversed(@RequestParam(defaultValue = "Hello") String text) {
+        return Map.of(
+            "channel", reversedNotifier.channel(),
+            "result", reversedNotifier.send(text)
+        );
+    }
 }
