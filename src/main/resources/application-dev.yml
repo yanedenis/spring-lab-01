@@ -4,6 +4,11 @@ app:
   mail:
     enabled: false
     retry-count: 1
+  locale:
+    default-locale: en
+    supported:
+      - en
+      - ru
 logging:
   level:
     kz.iitu: DEBUG

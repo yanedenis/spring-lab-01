@@ -23,16 +23,18 @@ public class Lab3Controller {
 
     @GetMapping("/config")
     public Map<String, Object> config() {
-        return Map.of(
-            "owner", props.owner(),
-            "group", props.group(),
-            "mailFrom", props.mail().from(),
-            "mailRetryCount", props.mail().retryCount(),
-            "mailTimeout", props.mail().timeout().toString(),
-            "mailEnabled", props.mail().enabled(),
-            "serverPort", environment.getProperty("server.port"),
-            "activeProfiles", Arrays.asList(environment.getActiveProfiles()),
-            "banner", banner.describe()
+        return Map.ofEntries(
+            Map.entry("owner", props.owner()),
+            Map.entry("group", props.group()),
+            Map.entry("mailFrom", props.mail().from()),
+            Map.entry("mailRetryCount", props.mail().retryCount()),
+            Map.entry("mailTimeout", props.mail().timeout().toString()),
+            Map.entry("mailEnabled", props.mail().enabled()),
+            Map.entry("defaultLocale", props.locale().defaultLocale()),
+            Map.entry("supportedLocale", props.locale().supported()),
+            Map.entry("serverPort", environment.getProperty("server.port")),
+            Map.entry("activeProfiles", Arrays.asList(environment.getActiveProfiles())),
+            Map.entry("banner", banner.describe())
         );
     }
 }
