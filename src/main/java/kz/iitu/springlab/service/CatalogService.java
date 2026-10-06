@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import kz.iitu.springlab.audit.Audited;
+import kz.iitu.springlab.retry.RetryOnFailure;
 
 @Service 
 public class CatalogService {
@@ -44,5 +45,16 @@ public class CatalogService {
         String first = self.remove(id);
         String second = self.remove(id + 1);
         return first + "; " + second;
+    }
+
+    private int attempts = 0;
+
+    @RetryOnFailure(maxAttempts = 3, delayMs = 300)
+    public String retryOnFailure(long id) {
+        attempts++;
+        if (attempts < 3) {
+            throw new RuntimeException("Unstable source failed (attempt " + attempts + ")");
+        }
+        return "fetched item " + id + " after " + attempts + " attempts";
     }
 }
