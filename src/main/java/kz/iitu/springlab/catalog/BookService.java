@@ -39,4 +39,10 @@ public class BookService {
     public boolean delete(long id) {
         return repository.deleteById(id);
     }
+
+    public List<Book> findByYear(int year) {
+        return repository.findAll().stream()
+                         .filter(book -> book.year() == year)
+                         .toList();
+    }
 }

@@ -60,4 +60,9 @@ public class BookRestController {
                 ? ResponseEntity.noContent().build()      // 204
                 : ResponseEntity.notFound().build();      // 404
     }
+
+    @GetMapping("/by-year/{year:\\d{4}}")
+    public List<Book> byYear(@PathVariable int year) {
+        return service.findByYear(year);
+    }
 }
