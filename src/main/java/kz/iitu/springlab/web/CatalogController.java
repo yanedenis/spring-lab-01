@@ -51,7 +51,7 @@ public class CatalogController {
         return catalogService.removeTwice(id);
     }
 
-    @GetMapping("/retryOnFailure/{id}")
+    @GetMapping("/retry-on-failure/{id}")
     public String retryOnFailure(@PathVariable long id) {
         return catalogService.retryOnFailure(id);
     }
